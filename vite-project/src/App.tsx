@@ -6,7 +6,7 @@ import TodoList from './toDoList'
 const App: React.FC = () => {
   return (
     <div className="max-w-md mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">Todo List</h1>
+      <h1 className="text-2xl font-bold text-center mb-4 text-green-400">*Todo List*</h1>
       <AddToDo/>
       <TodoList/>     
     </div>

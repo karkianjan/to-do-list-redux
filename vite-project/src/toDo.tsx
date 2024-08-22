@@ -21,7 +21,7 @@ const Todo: React.FC<TodoProps> = ({ id, text, completed }) => {
       </div>
       <button
         onClick={() => dispatch(deleteTodo(id))}
-        className="text-red-500 hover:text-red-700"
+        className="text-red-500 hover:text-red-800 text-lg "
       >
         Delete
       </button>
