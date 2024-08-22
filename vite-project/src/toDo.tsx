@@ -1,27 +1,32 @@
-import React from "react";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { toggleTodo, deleteTodo } from './store/toDoSlice';
 
-interface ToDoProps {
-    id : number;
-    text: string;
-    completed : boolean;
-    toogleToDo :(id : number) => void;
-    deleteToDo :(id : number) => void;
+interface TodoProps {
+  id: number;
+  text: string;
+  completed: boolean;
 }
 
-const ToDo : React.FC<ToDoProps> = ({id, text, completed, toogleToDo, deleteToDo }) => {
-    return(
-<div className="">
+const Todo: React.FC<TodoProps> = ({ id, text, completed }) => {
+  const dispatch = useDispatch();
 
-    <div className=""  onClick={() => toogleToDo(id)}>
+  return (
+    <div className="flex justify-between items-center p-4 bg-white shadow-md rounded mb-2">
+      <div
+        className={`flex-1 cursor-pointer ${completed ? 'line-through text-gray-500' : ''}`}
+        onClick={() => dispatch(toggleTodo(id))}
+      >
         {text}
+      </div>
+      <button
+        onClick={() => dispatch(deleteTodo(id))}
+        className="text-red-500 hover:text-red-700"
+      >
+        Delete
+      </button>
     </div>
-    
-    <button className="" onClick={() => deleteToDo(id)}>
-
-    </button>
-
-</div>
-    );
+  );
 };
 
-export default ToDo;
+export default Todo;

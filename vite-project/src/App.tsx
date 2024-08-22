@@ -1,14 +1,15 @@
-import { useState } from 'react'
+import React from 'react';
+import AddToDo from './addToDo';
 import './App.css'
+import TodoList from './toDoList'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App: React.FC = () => {
   return (
-    <>
-    <p>To-Do-List-Redux</p>
-    </>
-  )
+    <div className="max-w-md mx-auto p-4">
+      <h1 className="text-2xl font-bold text-center mb-4">Todo List</h1>
+      <AddToDo/>
+      <TodoList/>     
+    </div>
+  );
 }
-
 export default App

@@ -1,25 +1,19 @@
 import React from 'react';
-import ToDo from './toDo';
+import Todo from './toDo';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
 
+const TodoList: React.FC = () => {
+  const todos = useSelector((state: RootState) => state.todos.todos);
 
-interface TodoListProps {
-  todos: Array<{ id: number; text: string; completed: boolean }>;
-  toggleTodo: (id: number) => void;
-  deleteTodo: (id: number) => void;
-}
-
-const TodoList: React.FC<TodoListProps> = ({ todos, toggleTodo, deleteTodo }) => {
   return (
-    <div className="space-y-2">
+    <div className="">
       {todos.map((todo) => (
         <Todo
-          key={todo.id}
-          id={todo.id}
-          text={todo.text}
-          completed={todo.completed}
-          toggleTodo={toggleTodo}
-          deleteTodo={deleteTodo}
-        />
+         key={todo.id} 
+         id={todo.id}
+         text={todo.text} 
+         completed={todo.completed} />
       ))}
     </div>
   );
