@@ -1,43 +1,95 @@
+// import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+// interface ToDo{
+// id : number
+// text: string
+// completed: boolean
+
+// }
+
+// interface ToDoState{
+//     todos :  ToDo[];
+// }
+
+// const initialState : ToDoState ={
+//     todos: []
+// };
+
+// const todoSlice = createSlice({
+//     name: 'todos',
+//     initialState,
+//     reducers: {
+//       addTodo: (state, action: PayloadAction<string>) => {
+//         const newTodo: ToDo = {
+//           id: Date.now(),
+//           text: action.payload,
+//           completed: false,
+//         };
+//         state.todos.push(newTodo);
+//       },
+//       toggleTodo: (state, action: PayloadAction<number>) => {
+//         const todo = state.todos.find((todo) => todo.id === action.payload);
+//         if (todo) {
+//           todo.completed = !todo.completed;
+//         }
+//       },
+//       deleteTodo: (state, action: PayloadAction<number>) => {
+//         state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+//       },
+//     },
+//   });
+  
+//   export const { addTodo, toggleTodo, deleteTodo } = todoSlice.actions;
+//   export default todoSlice.reducer;
+
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ToDo{
-id : number
-text: string
-completed: boolean
-
+interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
 }
 
-interface ToDoState{
-    todos :  ToDo[];
+interface TodosState {
+  todos: Todo[];
 }
 
-const initialState : ToDoState ={
-    todos: []
+const initialState: TodosState = {
+  todos: [],
 };
 
+let nextTodoId = 1; 
+
 const todoSlice = createSlice({
-    name: 'todos',
-    initialState,
-    reducers: {
-      addTodo: (state, action: PayloadAction<string>) => {
-        const newTodo: ToDo = {
-          id: Date.now(),
-          text: action.payload,
-          completed: false,
-        };
-        state.todos.push(newTodo);
-      },
-      toggleTodo: (state, action: PayloadAction<number>) => {
-        const todo = state.todos.find((todo) => todo.id === action.payload);
-        if (todo) {
-          todo.completed = !todo.completed;
-        }
-      },
-      deleteTodo: (state, action: PayloadAction<number>) => {
-        state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-      },
+  name: 'todos',
+  initialState,
+  reducers: {
+    addTodo: (state, action: PayloadAction<string>) => {
+      state.todos.push({
+        id: nextTodoId++, 
+        text: action.payload,
+        completed: false,
+      });
     },
-  });
-  
-  export const { addTodo, toggleTodo, deleteTodo } = todoSlice.actions;
-  export default todoSlice.reducer;
+    toggleTodo: (state, action: PayloadAction<number>) => {
+      const todo = state.todos.find((todo) => todo.id === action.payload);
+      if (todo) {
+        todo.completed = !todo.completed;
+      }
+    },
+    deleteTodo: (state, action: PayloadAction<number>) => {
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+    },
+    editTodo: (state, action: PayloadAction<{ id: number; text: string }>) => {
+      const todo = state.todos.find((todo) => todo.id === action.payload.id);
+      if (todo) {
+        todo.text = action.payload.text;
+      }
+    },
+  },
+});
+
+export const { addTodo, toggleTodo, deleteTodo, editTodo } = todoSlice.actions;
+
+export default todoSlice.reducer;
